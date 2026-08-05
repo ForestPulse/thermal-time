@@ -1,28 +1,15 @@
 #!/bin/bash
 
-# warp_single_file.sh
-# Usage: 
-# ./warp_single_file.sh /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_test/2020_NormThermalTime_head/20200201_DWD.tif
-# parallel call:
-#ls /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/2022/*.tif | parallel -j 64 ./2_warp_file_to_tiles.sh {}
-#ls /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/2020/*.tif | parallel -j 32 ./2_warp_file_to_tiles.sh {}
 
-#Dauer, bei einfachem Aufruf
-# 203s (Ein file)
-# Dauer bei 60 Dateien, parallelisiert auf -j 32:
-# theoretisch 406/60 = 6.76 min 
-#(vs 7*60sec = 7 Minuten bei aneinanderreihung der Dateien, parallelisiert auf 32 Kernen)
-# 191s langsamster erste durchlauf;
-# Abgeschlossen: 2019,2020,2021
-# Noch fehlend: 2015,2016,2017,2018,2022,2023,2024,2025
+# parallel call:
+#ls /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/2025/*.tif | parallel -j 32 ./2_warp_file_to_tiles.sh {} /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/FORCE/ /data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt
 
 # === Konstanten ===
 #Y_63=2654919.608
 Y_63=2654919.6079648043960333
 #X_52=4016026.363
 X_52=4016026.3630416505038738
-OUTDIR="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_dc/"
-TILELIST="/data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt"
+
 
 # === Eingabe-Datei prüfen ===
 if [ $# -lt 1 ]; then
@@ -31,6 +18,12 @@ if [ $# -lt 1 ]; then
 fi
 
 INPUT="$1"
+OUTDIR="$2"
+TILELIST="$3"
+
+#OUTDIR="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_dc/"
+#TILELIST="/data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt"
+
 BASENAME=$(basename "$INPUT")
 
 # === Tiles sequenziell abarbeiten ===

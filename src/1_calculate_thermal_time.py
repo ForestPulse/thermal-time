@@ -10,10 +10,10 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--o", 
                     help="directory where the output file should be stored", 
-                    default= f'/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/')
+                    default= f'/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete')
 parser.add_argument("--year",
                     help="The year for which the DWD .asc files should be processed",
-                    default= '2015')
+                    default= '2025')
 args = parser.parse_args()
 
 def project_asc_file(output_folder):
