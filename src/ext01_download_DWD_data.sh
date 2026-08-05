@@ -5,12 +5,18 @@
 # =============
 
 # Input parameters
-year="2025"
-basefolder="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/"
+#year="2025"
+#basefolder="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/"
+#base_url="https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/soil_temperature_5cm/"
+# call
+# ./ext01_download_DWD_data.sh 2025 /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/ https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/soil_temperature_5cm/
+year=$1
+basefolder=$2
+base_url=$3
 
 # "static" variables
 storefolder="$basefolder/$year"
-base_url="https://opendata.dwd.de/climate_environment/CDC/grids_germany/daily/soil_temperature_5cm/"
+
 
 # =============
 # 1) Download data
