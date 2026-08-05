@@ -3,6 +3,7 @@
 
 # parallel call:
 #ls /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/2025/*.tif | parallel -j 32 ./2_warp_file_to_tiles.sh {} /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/FORCE/ /data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt
+#ls /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/2025/*.tif | parallel -j 32 ./2_warp_file_to_tiles.sh {} /data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete/FORCE/
 
 # === Konstanten ===
 #Y_63=2654919.608
@@ -19,7 +20,12 @@ fi
 
 INPUT="$1"
 OUTDIR="$2"
-TILELIST="$3"
+#TILELIST="$3"
+
+# find folder of the script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Tilelist in the same folder (via git)
+TILELIST="$SCRIPT_DIR/DC_tilelist.txt"
 
 #OUTDIR="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_dc/"
 #TILELIST="/data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt"

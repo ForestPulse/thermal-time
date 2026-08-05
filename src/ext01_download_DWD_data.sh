@@ -17,7 +17,6 @@ base_url=$3
 # "static" variables
 storefolder="$basefolder/$year"
 
-
 # =============
 # 1) Download data
 # =============
