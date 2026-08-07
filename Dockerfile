@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 
 # Install pip and venv
-RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal \
+RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal curl \
  && rm -rf /var/lib/apt/lists/*
 
 # Create and activate virtual environment
