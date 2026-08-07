@@ -46,3 +46,4 @@ for file in "$storefolder"/*.tgz; do
 done
 
 echo "I'm done here, bye!"
+sleep 1
