@@ -12,7 +12,9 @@ RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal c
 # Force real GNU coreutils - this base image ships uutils coreutils by default,
 # whose `date` doesn't correctly truncate %N to milliseconds (%3N), which breaks
 # Nextflow's .command.run timestamp parsing (nxf_date) under the k8s executor.
-RUN apt-get update && apt-get install -y --reinstall coreutils-from-gnu \
+RUN apt-get update \
+ && apt-get remove -y --allow-remove-essential coreutils-from-uutils \
+ && apt-get install -y --reinstall coreutils-from-gnu \
  && rm -rf /var/lib/apt/lists/* \
  && date --version | head -1 \
  && date +%s%3N
