@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import rasterio
 from rasterio.transform import from_origin
 from rasterio.fill import fillnodata
