@@ -9,6 +9,13 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal curl wget tar \
  && rm -rf /var/lib/apt/lists/*
 
+# Force real GNU coreutils - this base image ships uutils coreutils by default,
+# whose `date` doesn't correctly truncate %N to milliseconds (%3N), which breaks
+# Nextflow's .command.run timestamp parsing (nxf_date) under the k8s executor.
+RUN apt-get update && apt-get install -y --reinstall coreutils \
+ && rm -rf /var/lib/apt/lists/* \
+ && date --version | head -1
+
 # Create and activate virtual environment
 RUN python3 -m venv --system-site-packages /venv
 ENV PATH="/venv/bin:/app/src:$PATH"
