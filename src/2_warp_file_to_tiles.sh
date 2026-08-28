@@ -56,7 +56,7 @@ while read -r ordner; do
   OUTPUT="$TILE_FOLDER/$BASENAME"
 
   # GDAL Warping
-  gdalwarp -q -t_srs EPSG:3035 -tr 10 10 -ot Int16 -r near -overwrite \
+  gdalwarp -q -t_srs EPSG:3035 -tr 1000 1000 -ot Int16 -r near -overwrite \
     -of GTiff -wo "NUM_THREADS=1" -dstnodata -9999 \
     -co BIGTIFF=YES -co COMPRESS=LZW -co TILED=YES -co BLOCKXSIZE=256 -co BLOCKYSIZE=256 \
     -te "$XLEFT" "$YBOT" "$XRIGHT" "$YTOP" "$INPUT" "$OUTPUT"
