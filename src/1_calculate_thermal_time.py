@@ -10,15 +10,18 @@ from datetime import datetime
 import argparse
 parser = argparse.ArgumentParser()
 
+parser.add_argument("--i", 
+                    help="directory where the input files are stored", 
+                    default= f'/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete')
 parser.add_argument("--o", 
-                    help="directory where the output file should be stored", 
+                    help="directory where the output files will be stored", 
                     default= f'/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_calculate/delete')
 parser.add_argument("--year",
                     help="The year for which the DWD .asc files should be processed",
                     default= '2025')
 args = parser.parse_args()
 
-def project_asc_file(output_folder):
+def project_asc_file(input_folder, output_folder):
     #--------------------------------------
     #- 1) project .asc file to geotiff ----
     #--------------------------------------
@@ -34,14 +37,14 @@ def project_asc_file(output_folder):
     # Transformation erstellen (oben links als Referenz)
     transform = from_origin(xllcorner, yllcorner + nrows * cellsize, cellsize, cellsize)
 
-    for filename in os.listdir(output_folder):
-        if os.path.isfile(os.path.join(output_folder, filename)) & filename.endswith('.asc'):
+    for filename in os.listdir(input_folder):
+        if os.path.isfile(os.path.join(input_folder, filename)) & filename.endswith('.asc'):
             tif_filename = filename[:-4]+'.tif'
 
             if os.path.isfile(os.path.join(output_folder, tif_filename)):
                 continue
 
-            with rasterio.open(os.path.join(output_folder, filename)) as src:
+            with rasterio.open(os.path.join(input_folder, filename)) as src:
                 data = src.read(1)
                 # Geotiff speichern
                 with rasterio.open(
@@ -53,7 +56,7 @@ def project_asc_file(output_folder):
                     dst.write(data, 1)
                     meta = dst.meta.copy()
 
-            os.remove(os.path.join(output_folder, filename))
+            //os.remove(os.path.join(output_folder, filename))
         
 def interpolate_NoData_values(folder):
     print("Interpolate values")
@@ -147,8 +150,9 @@ def calculate_thermal_time(folder):
         os.remove(os.path.join(folder, file_name))
 
 if __name__ == '__main__':
+    inputs = os.path.join(args.i, args.year)
     folder = os.path.join(args.o, args.year)
     os.makedirs(folder, exist_ok=True)
-    project_asc_file(folder)
+    project_asc_file(inputs, folder)
     interpolate_NoData_values(folder)
     calculate_thermal_time(folder)
