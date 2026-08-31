@@ -1,5 +1,6 @@
 # using latest as it is the only one with 3.12 support
-FROM ghcr.io/osgeo/gdal:ubuntu-small-latest AS builder
+FROM ghcr.io/osgeo/gdal:ubuntu-small-3.8.4 AS builder
+#FROM ghcr.io/osgeo/gdal:ubuntu-small-latest AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -26,25 +27,8 @@ ENV PATH="/venv/bin:/app/src:$PATH"
 # Upgrade pip inside the venv and install requirements
 COPY requirements.txt .
 
-RUN echo "=== Python ===" && \
-    /venv/bin/python --version && \
-    echo "=== pip ===" && \
-    /venv/bin/pip --version && \
-    echo "=== pip config ===" && \
-    /venv/bin/pip config list && \
-    echo "=== PIP env ===" && \
-    env | grep -i '^PIP_' || true && \
-    echo "=== Fiona from PyPI ===" && \
-    /venv/bin/pip download \
-      --index-url https://pypi.org/simple \
-      --only-binary=:all: \
-      --no-deps \
-      -v fiona
-
 RUN /venv/bin/python --version && \
-    /venv/bin/pip --version && \
     /venv/bin/pip install --upgrade pip && \
-    /venv/bin/pip debug --verbose && \
     /venv/bin/pip install --only-binary=:all: --no-cache-dir -r requirements.txt
 
 COPY . .
