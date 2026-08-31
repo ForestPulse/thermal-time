@@ -25,8 +25,11 @@ ENV PATH="/venv/bin:/app/src:$PATH"
 
 # Upgrade pip inside the venv and install requirements
 COPY requirements.txt .
-RUN /venv/bin/pip install --upgrade pip && \
-    /venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN /venv/bin/python --version && \
+    /venv/bin/pip --version && \
+    /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install --only-binary=:all: --no-cache-dir -r requirements.txt
+    
 
 COPY . .
 
