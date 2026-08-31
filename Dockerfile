@@ -25,6 +25,22 @@ ENV PATH="/venv/bin:/app/src:$PATH"
 
 # Upgrade pip inside the venv and install requirements
 COPY requirements.txt .
+
+RUN echo "=== Python ===" && \
+    /venv/bin/python --version && \
+    echo "=== pip ===" && \
+    /venv/bin/pip --version && \
+    echo "=== pip config ===" && \
+    /venv/bin/pip config list && \
+    echo "=== PIP env ===" && \
+    env | grep -i '^PIP_' || true && \
+    echo "=== Fiona from PyPI ===" && \
+    /venv/bin/pip download \
+      --index-url https://pypi.org/simple \
+      --only-binary=:all: \
+      --no-deps \
+      -v fiona
+
 RUN /venv/bin/python --version && \
     /venv/bin/pip --version && \
     /venv/bin/pip install --upgrade pip && \
