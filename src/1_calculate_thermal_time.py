@@ -56,7 +56,7 @@ def project_asc_file(input_folder, output_folder):
                     dst.write(data, 1)
                     meta = dst.meta.copy()
 
-            //os.remove(os.path.join(output_folder, filename))
+            #os.remove(os.path.join(output_folder, filename))
         
 def interpolate_NoData_values(folder):
     print("Interpolate values")
