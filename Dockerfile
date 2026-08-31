@@ -28,8 +28,8 @@ COPY requirements.txt .
 RUN /venv/bin/python --version && \
     /venv/bin/pip --version && \
     /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip debug --verbose && \
     /venv/bin/pip install --only-binary=:all: --no-cache-dir -r requirements.txt
-    
 
 COPY . .
 
