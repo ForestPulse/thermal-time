@@ -22,10 +22,14 @@ INPUT="$1"
 OUTDIR="$2"
 #TILELIST="$3"
 
-# find folder of the script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="/app/src"
 # Tilelist in the same folder (via git)
-TILELIST="$SCRIPT_DIR/DC_tilelist.txt"
+TILELIST="${TILELIST_PATH:-$SCRIPT_DIR/DC_tilelist.txt}"
+
+if [ ! -f "$TILELIST" ]; then
+  echo "ERROR: tilelist not found at '$TILELIST'" >&2
+  exit 1
+fi
 
 #OUTDIR="/data/ahsoka/eocp/forestpulse/01_data/01_raw_data/DWD_dc/"
 #TILELIST="/data/ahsoka/eocp/forestpulse/02_scripts/DWD/DC_tilelist.txt"
