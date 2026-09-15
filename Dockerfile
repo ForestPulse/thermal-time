@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 
 # Install pip and venv
-RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal curl wget tar \
+RUN apt-get update && apt-get install -y python3-pip python3-venv python3-gdal curl wget tar bc\
  && rm -rf /var/lib/apt/lists/*
 
 # Force real GNU coreutils - this base image ships uutils coreutils by default,
